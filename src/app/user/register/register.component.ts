@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/services/auth.service';
+import { RegisterValidators } from '../validators/register-validators';
 
 import IUser from 'src/app/models/user.model';
 
@@ -30,14 +31,17 @@ export class RegisterComponent {
     Validators.maxLength(10),
   ]);
 
-  registerForm = new FormGroup({
-    name: this.name,
-    email: this.email,
-    age: this.age,
-    password: this.password,
-    confirmPassword: this.confirmPassword,
-    phoneNumber: this.phoneNumber,
-  });
+  registerForm = new FormGroup(
+    {
+      name: this.name,
+      email: this.email,
+      age: this.age,
+      password: this.password,
+      confirmPassword: this.confirmPassword,
+      phoneNumber: this.phoneNumber,
+    },
+    [RegisterValidators.match('password', 'confirmPassword')]
+  );
 
   showAlert = false;
   alertColor = 'blue';
