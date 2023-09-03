@@ -21,7 +21,13 @@
               class="px-2"
               routerLink="/manage"
               routerLinkActive="text-indigo-400"
-              [routerLinkActiveOptions]="{ exact: true }"
+              [routerLinkActiveOptions]="{
+                queryParams: 'ignored',
+                matrixParams: 'exact',
+                paths: 'exact',
+                fragment: 'exact',
+              }"
+              [queryParams]="{ sort: '1' }"
             >
               Manage
             </a>
@@ -45,6 +51,7 @@
             class="px-2"
             routerLink="/about"
             routerLinkActive="text-indigo-400"
+            [routerLinkActiveOptions]="{ exact: true }"
           >
             About
           </a>
