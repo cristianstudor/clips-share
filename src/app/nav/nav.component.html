@@ -19,7 +19,7 @@
           <li>
             <a
               class="px-2"
-              routerLink="/"
+              routerLink="/manage"
               routerLinkActive="text-indigo-400"
               [routerLinkActiveOptions]="{ exact: true }"
             >
@@ -27,10 +27,17 @@
             </a>
           </li>
           <li>
-            <a class="px-2" href="#">Upload</a>
+            <a
+              class="px-2"
+              routerLink="/upload"
+              routerLinkActive="text-indigo-400"
+              [routerLinkActiveOptions]="{ exact: true }"
+            >
+              Upload
+            </a>
           </li>
           <li>
-            <a class="px-2" href="#" (click)="logOut($event)">Logout</a>
+            <a class="px-2" href="#" (click)="auth.logOut($event)">Logout</a>
           </li>
         </ng-template>
         <li routerLinkActive="text-indigo-400">
