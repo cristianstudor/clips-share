@@ -1,22 +1,32 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input } from '@angular/core';
+import { DatePipe } from '@angular/common';
 import { ClipService } from '../services/clip.service';
 
 @Component({
   selector: 'app-clips-list',
   templateUrl: './clips-list.component.html',
   styleUrls: ['./clips-list.component.css'],
+  providers: [DatePipe],
 })
 export class ClipsListComponent implements OnInit, OnDestroy {
+  @Input() scrollable = true;
+
   constructor(public clipService: ClipService) {
     this.clipService.getClips();
   }
 
   ngOnInit(): void {
-    window.addEventListener('scroll', this.handleScroll);
+    if (this.scrollable) {
+      window.addEventListener('scroll', this.handleScroll);
+    }
   }
 
   ngOnDestroy(): void {
-    window.removeEventListener('scroll', this.handleScroll);
+    if (this.scrollable) {
+      window.removeEventListener('scroll', this.handleScroll);
+    }
+
+    this.clipService.pageClips = [];
   }
 
   handleScroll = () => {
@@ -25,8 +35,7 @@ export class ClipsListComponent implements OnInit, OnDestroy {
 
     const bottomOfWindow = Math.round(scrollTop) + innerHeight === offsetHeight;
 
-    if(bottomOfWindow) {
-      console.log('bottom of window');
+    if (bottomOfWindow) {
       this.clipService.getClips();
     }
   };
