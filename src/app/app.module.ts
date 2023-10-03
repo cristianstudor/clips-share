@@ -3,7 +3,6 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { UserModule } from './user/user.module';
-import { VideoModule } from './video/video.module';
 
 import { environment } from 'src/environments/environment';
 import { AngularFireModule } from '@angular/fire/compat';
@@ -38,7 +37,6 @@ import { FirebaseTimestampPipe } from './pipes/firebase-timestamp.pipe';
     AngularFireAuthModule,
     AngularFirestoreModule,
     AngularFireStorageModule,
-    VideoModule,
     AppRoutingModule,
   ],
   providers: [],

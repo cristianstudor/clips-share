@@ -15,13 +15,19 @@ import {
   BehaviorSubject,
   lastValueFrom,
 } from 'rxjs';
+import {
+  Resolve,
+  ActivatedRouteSnapshot,
+  RouterStateSnapshot,
+  Router,
+} from '@angular/router';
 
 import IClip from '../models/clip.model';
 
 @Injectable({
   providedIn: 'root',
 })
-export class ClipService {
+export class ClipService implements Resolve<IClip | null> {
   public clipsCollection: AngularFirestoreCollection<IClip>;
   pageClips: IClip[] = [];
   pendingRequest = false;
@@ -29,7 +35,8 @@ export class ClipService {
   constructor(
     private db: AngularFirestore,
     private auth: AngularFireAuth,
-    private storage: AngularFireStorage
+    private storage: AngularFireStorage,
+    private router: Router
   ) {
     this.clipsCollection = db.collection('clips');
   }
@@ -76,34 +83,50 @@ export class ClipService {
   }
 
   async getClips() {
-    if(this.pendingRequest) return;
+    if (this.pendingRequest) return;
 
     this.pendingRequest = true;
 
-    let query = this.clipsCollection.ref
-      .orderBy('timestamp', 'desc')
-      .limit(6);
+    let query = this.clipsCollection.ref.orderBy('timestamp', 'desc').limit(6);
 
     const { length } = this.pageClips;
 
     if (length) {
       const lastDocumentId = this.pageClips[length - 1].docID;
-      const lastDocument = await
-        this.clipsCollection.doc(lastDocumentId).get().toPromise()
-
+      const lastDocument = await lastValueFrom(
+        this.clipsCollection.doc(lastDocumentId).get()
+      );
 
       query = query.startAfter(lastDocument);
     }
 
     const snapshot = await query.get();
 
-    snapshot.forEach(doc => {
+    snapshot.forEach((doc) => {
       this.pageClips.push({
         docID: doc.id,
-        ...doc.data()
-      })
-    })
+        ...doc.data(),
+      });
+    });
 
     this.pendingRequest = false;
+  }
+
+  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
+    return this.clipsCollection
+      .doc(route.params['id'])
+      .get()
+      .pipe(
+        map((snapshot) => {
+          const data = snapshot.data();
+
+          if (!data) {
+            this.router.navigate(['/']);
+            return null;
+          }
+
+          return data;
+        })
+      );
   }
 }
