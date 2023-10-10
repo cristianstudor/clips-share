@@ -67,16 +67,16 @@ export class ManageComponent implements OnInit {
     });
   }
 
-  deleteClip($event: Event, clip: IClip) {
+  openModalDelete($event: Event, clip: IClip) {
     $event.preventDefault();
 
-    this.clipService.deleteClip(clip);
+    this.activeClip = clip;
 
-    this.clips.forEach((element, index) => {
-      if (element.docID == clip.docID) {
-        this.clips.splice(index, 1);
-      }
-    });
+    this.modal.toggleModal('deleteClip');
+  }
+
+  updateClips($event: IClip[]) {
+    this.clips = $event;
   }
 
   async copyToClipboard($event: MouseEvent, docID: string | undefined) {

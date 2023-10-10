@@ -7,10 +7,11 @@ import { ManageComponent } from './manage/manage.component';
 import { UploadComponent } from './upload/upload.component';
 import { SharedModule } from '../shared/shared.module';
 import { EditComponent } from './edit/edit.component';
+import { DeleteComponent } from './delete/delete.component';
 import { SafeURLPipe } from './pipes/safe-url.pipe';
 
 @NgModule({
-  declarations: [ManageComponent, UploadComponent, EditComponent, SafeURLPipe],
+  declarations: [ManageComponent, UploadComponent, EditComponent, DeleteComponent, SafeURLPipe],
   imports: [
     CommonModule,
     ReactiveFormsModule,
