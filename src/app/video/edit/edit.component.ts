@@ -46,9 +46,7 @@ export class EditComponent implements OnInit, OnDestroy, OnChanges {
     this.modal.unregister('editClip');
   }
   ngOnChanges(): void {
-    if (!this.activeClip) {
-      return;
-    }
+    if (!this.activeClip) return;
 
     this.inSubmission = false;
     this.showAlert = false;
@@ -57,9 +55,7 @@ export class EditComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   async submit() {
-    if (!this.activeClip) {
-      return;
-    }
+    if (!this.activeClip) return;
 
     this.inSubmission = true;
     this.showAlert = true;

@@ -32,6 +32,12 @@ export class DeleteComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.modal.unregister('deleteClip');
   }
+  ngOnChanges(): void {
+    if (!this.activeClip) return;
+
+    this.inSubmission = false;
+    this.showAlert = false;
+  }
 
   async deleteClip($event: Event) {
     $event.preventDefault();
@@ -62,7 +68,6 @@ export class DeleteComponent implements OnInit, OnDestroy {
 
     this.updateClips.emit(this.clips);
 
-    this.inSubmission = false;
     this.alertColor = 'green';
     this.alertMessage = 'Clip deleted!';
   }
