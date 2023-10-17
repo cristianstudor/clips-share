@@ -19,7 +19,7 @@ describe('TabsContainerComponent', () => {
   let component: TestHostComponent;
   let fixture: ComponentFixture<TestHostComponent>;
 
-  beforeEach(async () => {
+  beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [TabsContainerComponent, TabComponent, TestHostComponent],
     });

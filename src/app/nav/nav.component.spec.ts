@@ -15,12 +15,12 @@ describe('NavComponent', () => {
     { isAuthenticated$: of(true) }
   );
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
+  beforeEach(() => {
+    TestBed.configureTestingModule({
       declarations: [NavComponent],
       imports: [RouterTestingModule],
       providers: [{ provide: AuthService, useValue: mockedAuthService }],
-    }).compileComponents();
+    });
 
     fixture = TestBed.createComponent(NavComponent);
     component = fixture.componentInstance;
